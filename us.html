@@ -60,7 +60,7 @@ li span{color:var(--dim)}
 </main>
 
 <script>
-/* Photos: upload files named 1.jpg, 2.jpg ... or 01.jpg, 02.jpg ... (up to 12) next to us.html.
+/* Photos: upload files named 1.jpeg, 2.jpeg ... or 01.jpeg, 02.jpeg ... (up to 12) next to us.html. .jpg also works.
    Optional captions below, in the same order as the photos. */
 var CAPTIONS = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
@@ -71,7 +71,8 @@ var CAPTIONS = ["", "", "", "", "", "", "", "", "", "", "", ""];
       var f = document.createElement('figure'), im = new Image();
       im.alt = 'Us, photo ' + i; im.loading = 'lazy';
       im.onload = function(){ gal.hidden = false; };
-      var names = [i + '.jpg', (i < 10 ? '0' : '') + i + '.jpg'], k = 0;
+      var p = (i < 10 ? '0' : '') + i;
+      var names = [i + '.jpeg', p + '.jpeg', i + '.jpg', p + '.jpg'], k = 0;
       im.onerror = function(){ k++; if (k < names.length) { im.src = names[k]; } else { f.remove(); } };
       im.src = names[0];
       f.appendChild(im);
