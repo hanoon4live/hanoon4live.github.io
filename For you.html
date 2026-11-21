@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For you</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,300;1,9..144,500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --night:#1c110c; --deep:#3b2418; --rose:#e8c4a0; --gold:#d4a26a; --mist:#eadccf; --dim:#a58b78;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif; --sans:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--night);color:var(--mist);font-family:var(--sans);font-size:17px;line-height:1.6}
+h1,h2{font-family:var(--serif);font-weight:300;margin:0;color:#fff}
+
+/* Sky */
+.sky{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;
+  background:
+   radial-gradient(1.5px 1.5px at 12% 18%,#fff8 50%,transparent 51%),
+   radial-gradient(1px 1px at 33% 62%,#fff7 50%,transparent 51%),
+   radial-gradient(1.5px 1.5px at 58% 12%,#fff8 50%,transparent 51%),
+   radial-gradient(1px 1px at 77% 48%,#fff6 50%,transparent 51%),
+   radial-gradient(1px 1px at 90% 80%,#fff7 50%,transparent 51%),
+   radial-gradient(1px 1px at 22% 88%,#fff6 50%,transparent 51%),
+   radial-gradient(1px 1px at 66% 74%,#fff6 50%,transparent 51%),
+   radial-gradient(ellipse at 50% 120%,#6b4429 0%,transparent 60%),
+   linear-gradient(var(--night),var(--deep));}
+.head{position:absolute;top:9vh;left:0;right:0;text-align:center;padding:0 24px;pointer-events:none}
+.head h1{font-size:clamp(2.2rem,7vw,4.4rem);font-style:italic;line-height:1.1}
+.head p{margin:.8rem 0 0;color:var(--dim)}
+.star{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border:0;background:none;cursor:pointer;border-radius:50%;padding:0}
+.star::before{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px 3px #d4a26a88;transition:all .35s}
+.star:hover::before,.star:focus-visible::before{inset:14px;box-shadow:0 0 18px 6px #d4a26aaa}
+.star:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+.star.found::before{background:var(--rose);box-shadow:0 0 16px 5px #e8c4a0aa}
+.star.on::before{inset:11px;background:#fff;box-shadow:0 0 28px 10px #e8c4a0cc}
+.reason{position:absolute;left:0;right:0;bottom:calc(6vh + 28px);text-align:center;padding:0 24px;min-height:9rem}
+.reason q{display:block;max-width:30ch;margin:0 auto;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(1.4rem,4.5vw,2.1rem);line-height:1.3;color:#fff;quotes:"“" "”";opacity:0;transition:opacity .6s}
+.reason q.show{opacity:1}
+.count{position:absolute;left:0;right:0;bottom:calc(3vh + 6px);text-align:center;color:var(--dim);font-size:.9rem}
+
+/* Sections */
+section.s{max-width:640px;margin:0 auto;padding:96px 24px}
+.days{text-align:center}
+.days .n{font-family:var(--serif);font-size:clamp(4rem,16vw,7.5rem);font-weight:300;color:var(--gold);line-height:1}
+.days p{margin:.6rem 0 0;color:var(--dim)}
+.letter h2{font-size:clamp(1.8rem,5vw,2.6rem);font-style:italic;margin-bottom:1.6rem}
+.letter p{font-family:var(--serif);font-weight:300;font-size:1.2rem;line-height:1.75;margin:0 0 1.2rem;color:var(--mist);max-width:60ch}
+.sign{color:var(--rose);font-style:italic}
+
+/* Timeline */
+.tl h2{font-size:clamp(1.8rem,5vw,2.6rem);font-style:italic;margin-bottom:2.2rem;text-align:center}
+.tl ol{list-style:none;margin:0;padding:0 0 0 28px;border-left:1px solid #d4a26a66}
+.tl li{position:relative;padding-bottom:2rem}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:-34px;top:.55rem;width:11px;height:11px;border-radius:50%;background:var(--rose);box-shadow:0 0 10px 2px #e8c4a088}
+.tl time{display:block;color:var(--gold);font-size:.95rem}
+.tl b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;color:#fff;line-height:1.3}
+.tl span{color:var(--dim)}
+
+/* Ending */
+.end{text-align:center;padding-bottom:120px}
+.end h2{font-size:clamp(1.6rem,5vw,2.4rem);font-style:italic;margin-bottom:2rem}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;min-height:54px;position:relative}
+.btn{font:500 1rem var(--sans);border:1px solid var(--rose);background:transparent;color:var(--rose);padding:14px 30px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.btn.yes{background:var(--rose);color:var(--night)}
+.btn:hover,.btn:focus-visible{background:var(--rose);color:var(--night)}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.btn.dodge{position:absolute;transition:left .25s,top .25s}
+.thanks{display:none;font-family:var(--serif);font-style:italic;font-size:1.5rem;color:#fff;margin-top:1rem}
+.heart{position:fixed;bottom:-30px;pointer-events:none;color:var(--rose);animation:rise 3.2s ease-out forwards;z-index:5}
+@keyframes rise{to{transform:translateY(-105vh);opacity:0}}
+@media (prefers-reduced-motion:reduce){.heart{animation:none;display:none}.star::before,.reason q,.btn{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="sky" id="sky">
+  <div class="head">
+    <h1 id="title">For you</h1>
+    <p>Every star up here is a reason. Tap one.</p>
+  </div>
+  <div class="reason" aria-live="polite"><q id="reason"></q></div>
+  <div class="count" id="count"></div>
+</div>
+
+<section class="s days">
+  <div class="n" id="days">0</div>
+  <p>days since the day we met</p>
+</section>
+
+<section class="s tl">
+  <h2>Our dates</h2>
+  <ol>
+    <li><time>11 June 2006</time><b>The day the world got you</b></li>
+    <li><time>31 October 2025</time><b>The day we met</b><span>Where everything started.</span></li>
+    <li><time>24 December 2025</time><b>My birthday party, made by you</b><span>You made my day without me asking.</span></li>
+    <li><time>21 January 2026</time><b>The first time I said “I love you”</b><span>And I meant every word.</span></li>
+    <li><time>3 June 2026</time><b>Your birthday party</b><span>My turn to celebrate you.</span></li>
+  </ol>
+</section>
+
+<section class="s letter">
+  <h2>A few words for you</h2>
+  <p>I wanted to give you something that isn’t a message I’ll bury in a chat. Something you can open any time you need to remember how much you mean to me.</p>
+  <p>You make ordinary days feel lighter. You make me want to be better, and you make me feel at home in a way I can’t really explain.</p>
+  <p>Thank you for being you — patient, funny, beautiful, and mine. I’m so grateful I get to love you.</p>
+  <p class="sign" id="sign">Yours always</p>
+</section>
+
+<section class="s end">
+  <h2>One last question</h2>
+  <div class="btns" id="btns">
+    <button class="btn yes" id="yes">Yes, I love you too</button>
+    <button class="btn" id="no">Not sure</button>
+  </div>
+  <div class="thanks" id="thanks">I knew it. I love you more.</div>
+</section>
+
+<script>
+/* ===== EDIT THESE ===== */
+var NAME = "Hanoon";            // her name
+var FROM = "Youssef";            // your name
+var START = "2025-10-31";        // the day you met (YYYY-MM-DD)
+var REASONS = [
+  "Your smile fixes my worst days.",
+  "You laugh at my jokes, even the bad ones.",
+  "You make me feel calm.",
+  "The way you care about the people you love.",
+  "Your voice is my favorite sound.",
+  "You believe in me when I doubt myself.",
+  "You’re beautiful inside and out.",
+  "You made my birthday unforgettable.",
+  "You’re my best friend.",
+  "You’re strong, and you don’t even notice it.",
+  "Being with you feels like home.",
+  "Because it’s you, Hanoon. Always you."
+];
+/* ======================= */
+
+var POS = [[14,34],[30,50],[22,22],[46,30],[58,18],[70,40],[84,26],[78,58],[10,58],[38,66],[62,60],[90,48]];
+var sky = document.getElementById('sky'), q = document.getElementById('reason'), count = document.getElementById('count');
+var found = {}, total = REASONS.length, cur = null;
+
+document.getElementById('title').textContent = "For " + NAME;
+document.getElementById('sign').textContent = "Yours always, " + FROM;
+document.title = "For " + NAME;
+
+function updateCount(){ var n = Object.keys(found).length; count.textContent = n === total ? "You found every one. There are more than I could ever list." : n + " of " + total + " found"; }
+updateCount();
+
+REASONS.forEach(function(text, i){
+  var b = document.createElement('button');
+  b.className = 'star'; b.setAttribute('aria-label', 'Reason ' + (i+1));
+  b.style.left = POS[i][0] + '%'; b.style.top = POS[i][1] + '%';
+  b.addEventListener('click', function(){
+    if (cur) cur.classList.remove('on');
+    cur = b; b.classList.add('found','on'); found[i] = 1;
+    q.classList.remove('show');
+    setTimeout(function(){ q.textContent = text; q.classList.add('show'); }, 150);
+    updateCount();
+  });
+  sky.appendChild(b);
+});
+
+/* days together */
+var d = Math.floor((Date.now() - new Date(START + "T00:00:00").getTime()) / 864e5);
+document.getElementById('days').textContent = isFinite(d) && d > 0 ? d.toLocaleString() : "∞";
+
+/* playful ending */
+var no = document.getElementById('no'), btns = document.getElementById('btns');
+function dodge(){
+  no.classList.add('dodge');
+  var w = btns.clientWidth - no.offsetWidth, h = 60;
+  no.style.left = Math.max(0, Math.random() * w) + 'px';
+  no.style.top = (Math.random() * h - 10) + 'px';
+}
+no.addEventListener('mouseenter', dodge);
+no.addEventListener('click', dodge);
+no.addEventListener('touchstart', function(e){ e.preventDefault(); dodge(); }, {passive:false});
+
+document.getElementById('yes').addEventListener('click', function(){
+  document.getElementById('thanks').style.display = 'block';
+  no.style.display = 'none';
+  for (var i = 0; i < 26; i++) {
+    (function(i){ setTimeout(function(){
+      var h = document.createElement('div');
+      h.className = 'heart'; h.textContent = '♥';
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.fontSize = (16 + Math.random() * 26) + 'px';
+      document.body.appendChild(h);
+      setTimeout(function(){ h.remove(); }, 3300);
+    }, i * 90); })(i);
+  }
+});
+</script>
+</body>
+</html>
