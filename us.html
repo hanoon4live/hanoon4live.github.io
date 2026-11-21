@@ -60,27 +60,45 @@ li span{color:var(--dim)}
 </main>
 
 <script>
-/* Photos: upload files named 1.jpeg, 2.jpeg ... or 01.jpeg, 02.jpeg ... (up to 12) next to us.html. .jpg also works.
-   Optional captions below, in the same order as the photos. */
-var CAPTIONS = ["", "", "", "", "", "", "", "", "", "", "", ""];
 
-(function(){
-  var grid = document.getElementById('grid'), gal = document.getElementById('gal');
-  for (var i = 1; i <= 12; i++) {
-    (function(i){
-      var f = document.createElement('figure'), im = new Image();
-      im.alt = 'Us, photo ' + i;
-      im.onload = function(){ gal.hidden = false; };
-      var p = (i < 10 ? '0' : '') + i;
-      var names = [i + '.jpeg', p + '.jpeg', i + '.jpg', p + '.jpg'], k = 0;
-      im.onerror = function(){ k++; if (k < names.length) { im.src = names[k]; } else { f.remove(); } };
-      im.src = names[0];
-      f.appendChild(im);
-      if (CAPTIONS[i-1]) { var c = document.createElement('figcaption'); c.textContent = CAPTIONS[i-1]; f.appendChild(c); }
-      grid.appendChild(f);
-    })(i);
+/* Loads photos in order and stops when they run out, so any number works.
+   Name them: PREFIX1.jpeg, PREFIX2.jpeg, PREFIX3.jpeg ... (01, 02 also work; jpeg, jpg, png, webp all work). */
+function loadSeries(prefix, onAdd, onDone) {
+  var EXTS = ['jpeg', 'jpg', 'png', 'webp'], found = 0;
+  function candidates(i) {
+    var nums = i < 10 ? [String(i), '0' + i] : [String(i)], out = [];
+    nums.forEach(function(n){ EXTS.forEach(function(e){ out.push(prefix + n + '.' + e); }); });
+    return out;
   }
-})();
+  function tryList(list, k, ok, fail) {
+    if (k >= list.length) { fail(); return; }
+    var im = new Image();
+    im.onload = function(){ ok(im); };
+    im.onerror = function(){ tryList(list, k + 1, ok, fail); };
+    im.src = list[k];
+  }
+  function next(i, misses) {
+    if (misses >= 3 || i > 300) { onDone(found); return; }
+    tryList(candidates(i), 0,
+      function(im){ found++; onAdd(im, found); next(i + 1, 0); },
+      function(){ next(i + 1, misses + 1); });
+  }
+  next(1, 0);
+}
+
+/* Optional captions, in the same order as the photos. Leave "" for none. */
+var CAPTIONS = [];
+
+var grid = document.getElementById('grid'), gal = document.getElementById('gal');
+loadSeries('', function(im, n){
+  var f = document.createElement('figure');
+  im.alt = 'Us, photo ' + n;
+  f.appendChild(im);
+  if (CAPTIONS[n-1]) { var c = document.createElement('figcaption'); c.textContent = CAPTIONS[n-1]; f.appendChild(c); }
+  grid.appendChild(f);
+  gal.hidden = false;
+}, function(){});
 </script>
+<script src="collage.js" defer></script>
 </body>
 </html>
