@@ -52,22 +52,12 @@ section.s{max-width:640px;margin:0 auto;padding:96px 24px}
 .letter p{font-family:var(--serif);font-weight:300;font-size:1.2rem;line-height:1.75;margin:0 0 1.2rem;color:var(--mist);max-width:60ch}
 .sign{color:var(--rose);font-style:italic}
 
-/* Timeline */
-.tl h2{font-size:clamp(1.8rem,5vw,2.6rem);font-style:italic;margin-bottom:2.2rem;text-align:center}
-.tl ol{list-style:none;margin:0;padding:0 0 0 28px;border-left:1px solid #d4a26a66}
-.tl li{position:relative;padding-bottom:2rem}
-.tl li:last-child{padding-bottom:0}
-.tl li::before{content:"";position:absolute;left:-34px;top:.55rem;width:11px;height:11px;border-radius:50%;background:var(--rose);box-shadow:0 0 10px 2px #e8c4a088}
-.tl time{display:block;color:var(--gold);font-size:.95rem}
-.tl b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;color:#fff;line-height:1.3}
-.tl span{color:var(--dim)}
-
-/* Photos */
-.gal h2{font-size:clamp(1.8rem,5vw,2.6rem);font-style:italic;margin-bottom:2rem;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
-.grid figure{margin:0}
-.grid img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:1px solid #d4a26a55}
-.grid figcaption{margin-top:.5rem;font-size:.9rem;color:var(--dim)}
+/* Us button */
+.usbtn{text-align:center;padding:72px 24px 8px}
+.big{display:inline-block;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(2.6rem,10vw,4.4rem);line-height:1;color:var(--night);background:var(--rose);padding:.5em 2em;border-radius:999px;text-decoration:none;box-shadow:0 0 44px 6px #e8c4a055;transition:transform .2s,box-shadow .2s}
+.big:hover{transform:scale(1.04);box-shadow:0 0 56px 10px #e8c4a077}
+.big:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.usbtn p{margin:1.1rem 0 0;color:var(--dim)}
 
 /* Ending */
 .end{text-align:center;padding-bottom:120px}
@@ -95,25 +85,14 @@ section.s{max-width:640px;margin:0 auto;padding:96px 24px}
   <div class="count" id="count"></div>
 </div>
 
+<section class="usbtn">
+  <a class="big" href="us.html">Us</a>
+  <p>Our story and our photos</p>
+</section>
+
 <section class="s days">
   <div class="n" id="days">0</div>
   <p>days since the day we met</p>
-</section>
-
-<section class="s tl">
-  <h2>Our dates</h2>
-  <ol>
-    <li><time>11 June 2006</time><b>The day the world got you</b></li>
-    <li><time>31 October 2025</time><b>The day we met</b><span>Where everything started.</span></li>
-    <li><time>24 December 2025</time><b>My birthday party, made by you</b><span>You made my day without me asking.</span></li>
-    <li><time>21 January 2026</time><b>The first time I said “I love you”</b><span>And I meant every word.</span></li>
-    <li><time>3 June 2026</time><b>Your birthday party</b><span>My turn to celebrate you.</span></li>
-  </ol>
-</section>
-
-<section class="s gal" id="gal" hidden>
-  <h2>Us</h2>
-  <div class="grid" id="grid"></div>
 </section>
 
 <section class="s letter">
@@ -152,8 +131,6 @@ var REASONS = [
   "Being with you feels like home.",
   "Because it’s you, Hanoon. Always you."
 ];
-/* Photos: upload files named 1.jpg, 2.jpg, 3.jpg ... (up to 12) next to index.html. Optional captions below, in the same order. */
-var CAPTIONS = ["", "", "", "", "", "", "", "", "", "", "", ""];
 /* ======================= */
 
 var POS = [[14,34],[30,50],[22,22],[46,30],[58,18],[70,40],[84,26],[78,58],[10,58],[38,66],[62,60],[90,48]];
@@ -163,23 +140,6 @@ var found = {}, total = REASONS.length, cur = null;
 document.getElementById('title').textContent = "For " + NAME;
 document.getElementById('sign').textContent = "Yours always, " + FROM;
 document.title = "For " + NAME;
-
-/* photos: show only the ones that exist */
-(function(){
-  var grid = document.getElementById('grid'), gal = document.getElementById('gal');
-  for (var i = 1; i <= 12; i++) {
-    (function(i){
-      var f = document.createElement('figure'), im = new Image();
-      im.alt = 'Us, photo ' + i; im.loading = 'lazy';
-      im.onload = function(){ gal.hidden = false; };
-      im.onerror = function(){ f.remove(); };
-      im.src = i + '.jpg';
-      f.appendChild(im);
-      if (CAPTIONS[i-1]) { var c = document.createElement('figcaption'); c.textContent = CAPTIONS[i-1]; f.appendChild(c); }
-      grid.appendChild(f);
-    })(i);
-  }
-})();
 
 function updateCount(){ var n = Object.keys(found).length; count.textContent = n === total ? "You found every one. There are more than I could ever list." : n + " of " + total + " found"; }
 updateCount();
