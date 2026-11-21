@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your favourite messages from me</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,300;1,9..144,500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --night:#1c110c; --deep:#3b2418; --rose:#e8c4a0; --gold:#d4a26a; --mist:#eadccf; --dim:#a58b78;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif; --sans:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:linear-gradient(var(--night),var(--deep)) fixed,var(--night);color:var(--mist);font-family:var(--sans);font-size:17px;line-height:1.6}
+h1{font-family:var(--serif);font-weight:300;font-style:italic;color:#fff;margin:0;font-size:clamp(2rem,7.5vw,3.2rem);line-height:1.15;text-align:center;margin:56px 0 10px}
+main{max-width:560px;margin:0 auto;padding:40px 24px 96px}
+.back{display:inline-block;color:var(--rose);text-decoration:none;border:1px solid var(--rose);padding:10px 22px;border-radius:999px;font-weight:500}
+.back:hover,.back:focus-visible{background:var(--rose);color:var(--night)}
+.back:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.sub{text-align:center;color:var(--dim);margin:0 0 48px}
+.list{display:flex;flex-direction:column;align-items:center;gap:20px}
+.list img{display:block;width:100%;max-width:420px;height:auto;border-radius:14px;border:1px solid #d4a26a55;cursor:zoom-in}
+.empty{text-align:center;color:var(--dim)}
+.foot{text-align:center;margin-top:72px}
+.lb{position:fixed;inset:0;z-index:10;background:#000000e6;display:none;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="index.html">Back</a>
+  <h1>Your favourite messages from me</h1>
+  <p class="sub">Words I wrote just for you. Tap one to see it bigger.</p>
+
+  <div class="list" id="list"></div>
+  <p class="empty" id="empty" hidden>More soon.</p>
+
+  <div class="foot"><a class="back" href="index.html">Back</a></div>
+</main>
+<div class="lb" id="lb" role="dialog" aria-label="Message, full size"><img id="lbimg" alt=""></div>
+
+<script>
+
+/* Loads photos in order and stops when they run out, so any number works.
+   Name them: PREFIX1.jpeg, PREFIX2.jpeg, PREFIX3.jpeg ... (01, 02 also work; jpeg, jpg, png, webp all work). */
+function loadSeries(prefix, onAdd, onDone) {
+  var EXTS = ['jpeg', 'jpg', 'png', 'webp'], found = 0;
+  function candidates(i) {
+    var nums = i < 10 ? [String(i), '0' + i] : [String(i)], out = [];
+    nums.forEach(function(n){ EXTS.forEach(function(e){ out.push(prefix + n + '.' + e); }); });
+    return out;
+  }
+  function tryList(list, k, ok, fail) {
+    if (k >= list.length) { fail(); return; }
+    var im = new Image();
+    im.onload = function(){ ok(im); };
+    im.onerror = function(){ tryList(list, k + 1, ok, fail); };
+    im.src = list[k];
+  }
+  function next(i, misses) {
+    if (misses >= 3 || i > 300) { onDone(found); return; }
+    tryList(candidates(i), 0,
+      function(im){ found++; onAdd(im, found); next(i + 1, 0); },
+      function(){ next(i + 1, misses + 1); });
+  }
+  next(1, 0);
+}
+
+var list = document.getElementById('list'), lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg');
+loadSeries('msg', function(im, n){
+  im.alt = 'Message ' + n;
+  im.addEventListener('click', function(){ lbimg.src = im.src; lb.classList.add('on'); });
+  list.appendChild(im);
+}, function(found){
+  if (!found) document.getElementById('empty').hidden = false;
+});
+lb.addEventListener('click', function(){ lb.classList.remove('on'); });
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') lb.classList.remove('on'); });
+</script>
+</body>
+</html>
