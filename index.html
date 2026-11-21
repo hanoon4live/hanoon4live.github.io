@@ -62,6 +62,13 @@ section.s{max-width:640px;margin:0 auto;padding:96px 24px}
 .tl b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;color:#fff;line-height:1.3}
 .tl span{color:var(--dim)}
 
+/* Photos */
+.gal h2{font-size:clamp(1.8rem,5vw,2.6rem);font-style:italic;margin-bottom:2rem;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.grid figure{margin:0}
+.grid img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:1px solid #d4a26a55}
+.grid figcaption{margin-top:.5rem;font-size:.9rem;color:var(--dim)}
+
 /* Ending */
 .end{text-align:center;padding-bottom:120px}
 .end h2{font-size:clamp(1.6rem,5vw,2.4rem);font-style:italic;margin-bottom:2rem}
@@ -104,6 +111,11 @@ section.s{max-width:640px;margin:0 auto;padding:96px 24px}
   </ol>
 </section>
 
+<section class="s gal" id="gal" hidden>
+  <h2>Us</h2>
+  <div class="grid" id="grid"></div>
+</section>
+
 <section class="s letter">
   <h2>A few words for you</h2>
   <p>I wanted to give you something that isn’t a message I’ll bury in a chat. Something you can open any time you need to remember how much you mean to me.</p>
@@ -140,6 +152,8 @@ var REASONS = [
   "Being with you feels like home.",
   "Because it’s you, Hanoon. Always you."
 ];
+/* Photos: upload files named 1.jpg, 2.jpg, 3.jpg ... (up to 12) next to index.html. Optional captions below, in the same order. */
+var CAPTIONS = ["", "", "", "", "", "", "", "", "", "", "", ""];
 /* ======================= */
 
 var POS = [[14,34],[30,50],[22,22],[46,30],[58,18],[70,40],[84,26],[78,58],[10,58],[38,66],[62,60],[90,48]];
@@ -149,6 +163,23 @@ var found = {}, total = REASONS.length, cur = null;
 document.getElementById('title').textContent = "For " + NAME;
 document.getElementById('sign').textContent = "Yours always, " + FROM;
 document.title = "For " + NAME;
+
+/* photos: show only the ones that exist */
+(function(){
+  var grid = document.getElementById('grid'), gal = document.getElementById('gal');
+  for (var i = 1; i <= 12; i++) {
+    (function(i){
+      var f = document.createElement('figure'), im = new Image();
+      im.alt = 'Us, photo ' + i; im.loading = 'lazy';
+      im.onload = function(){ gal.hidden = false; };
+      im.onerror = function(){ f.remove(); };
+      im.src = i + '.jpg';
+      f.appendChild(im);
+      if (CAPTIONS[i-1]) { var c = document.createElement('figcaption'); c.textContent = CAPTIONS[i-1]; f.appendChild(c); }
+      grid.appendChild(f);
+    })(i);
+  }
+})();
 
 function updateCount(){ var n = Object.keys(found).length; count.textContent = n === total ? "You found every one. There are more than I could ever list." : n + " of " + total + " found"; }
 updateCount();
