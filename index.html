@@ -177,7 +177,36 @@ no.addEventListener('mouseenter', dodge);
 no.addEventListener('click', dodge);
 no.addEventListener('touchstart', function(e){ e.preventDefault(); dodge(); }, {passive:false});
 
+/* email notification when someone presses Yes (sent once per visit) */
+var notified = false;
+function deviceName(){
+  var u = navigator.userAgent, os = 'Unknown device', br = 'Unknown browser';
+  if (/iPhone/.test(u)) os = 'iPhone'; else if (/iPad/.test(u)) os = 'iPad';
+  else if (/Android/.test(u)) os = 'Android phone/tablet'; else if (/Windows/.test(u)) os = 'Windows computer';
+  else if (/Mac OS X/.test(u)) os = 'Mac'; else if (/Linux/.test(u)) os = 'Linux computer';
+  if (/EdgA?\/|Edg\//.test(u)) br = 'Edge'; else if (/OPR\//.test(u)) br = 'Opera';
+  else if (/CriOS|Chrome\//.test(u)) br = 'Chrome'; else if (/FxiOS|Firefox\//.test(u)) br = 'Firefox';
+  else if (/Safari\//.test(u)) br = 'Safari';
+  return os + ', ' + br;
+}
+function notifyYes(){
+  if (notified) return; notified = true;
+  try {
+    var when = new Date().toLocaleString('en-GB', {timeZone:'Africa/Cairo', dateStyle:'full', timeStyle:'short'});
+    fetch('https://api.web3forms.com/submit', {
+      method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'}, keepalive:true,
+      body: JSON.stringify({
+        access_key:'70dfd492-87d0-4969-9898-ab2c7b368b8e',
+        subject:'Someone pressed "Yes, I love you too"',
+        from_name:'Your love website',
+        message:'Pressed Yes on: ' + when + ' (Cairo time)\nDevice: ' + deviceName()
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
+
 document.getElementById('yes').addEventListener('click', function(){
+  notifyYes();
   document.getElementById('thanks').style.display = 'block';
   no.style.display = 'none';
   for (var i = 0; i < 26; i++) {
