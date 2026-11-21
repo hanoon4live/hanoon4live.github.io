@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Us</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,300;1,9..144,500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --night:#1c110c; --deep:#3b2418; --rose:#e8c4a0; --gold:#d4a26a; --mist:#eadccf; --dim:#a58b78;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif; --sans:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:linear-gradient(var(--night),var(--deep)) fixed,var(--night);color:var(--mist);font-family:var(--sans);font-size:17px;line-height:1.6}
+h1,h2{font-family:var(--serif);font-weight:300;margin:0;color:#fff}
+main{max-width:640px;margin:0 auto;padding:40px 24px 96px}
+.back{display:inline-block;color:var(--rose);text-decoration:none;border:1px solid var(--rose);padding:10px 22px;border-radius:999px;font-weight:500}
+.back:hover,.back:focus-visible{background:var(--rose);color:var(--night)}
+.back:focus-visible{outline:2px solid #fff;outline-offset:3px}
+h1{font-size:clamp(2.6rem,9vw,4.4rem);font-style:italic;text-align:center;margin:56px 0 10px}
+.sub{text-align:center;color:var(--dim);margin:0 0 64px}
+h2{font-size:clamp(1.6rem,5vw,2.3rem);font-style:italic;margin:0 0 2rem;text-align:center}
+ol{list-style:none;margin:0 0 80px;padding:0 0 0 28px;border-left:1px solid #d4a26a66}
+li{position:relative;padding-bottom:2rem}
+li:last-child{padding-bottom:0}
+li::before{content:"";position:absolute;left:-34px;top:.55rem;width:11px;height:11px;border-radius:50%;background:var(--rose);box-shadow:0 0 10px 2px #e8c4a088}
+time{display:block;color:var(--gold);font-size:.95rem}
+li b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;color:#fff;line-height:1.3}
+li span{color:var(--dim)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+.grid figure{margin:0}
+.grid img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:10px;border:1px solid #d4a26a55}
+.grid figcaption{margin-top:.5rem;font-size:.9rem;color:var(--dim)}
+.foot{text-align:center;margin-top:80px}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="index.html">Back</a>
+  <h1 id="t">Us</h1>
+  <p class="sub">Every date that mattered, and the faces that made them.</p>
+
+  <h2>Our dates</h2>
+  <ol>
+    <li><time>11 June 2006</time><b>The day the world got you</b></li>
+    <li><time>31 October 2025</time><b>The day we met</b><span>Where everything started.</span></li>
+    <li><time>24 December 2025</time><b>My birthday party, made by you</b><span>You made my day without me asking.</span></li>
+    <li><time>21 January 2026</time><b>The first time I said “I love you”</b><span>And I meant every word.</span></li>
+    <li><time>3 June 2026</time><b>Your birthday party</b><span>My turn to celebrate you.</span></li>
+  </ol>
+
+  <section id="gal" hidden>
+    <h2>Our photos</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <div class="foot"><a class="back" href="index.html">Back</a></div>
+</main>
+
+<script>
+/* Photos: upload files named 1.jpg, 2.jpg ... or 01.jpg, 02.jpg ... (up to 12) next to us.html.
+   Optional captions below, in the same order as the photos. */
+var CAPTIONS = ["", "", "", "", "", "", "", "", "", "", "", ""];
+
+(function(){
+  var grid = document.getElementById('grid'), gal = document.getElementById('gal');
+  for (var i = 1; i <= 12; i++) {
+    (function(i){
+      var f = document.createElement('figure'), im = new Image();
+      im.alt = 'Us, photo ' + i; im.loading = 'lazy';
+      im.onload = function(){ gal.hidden = false; };
+      var names = [i + '.jpg', (i < 10 ? '0' : '') + i + '.jpg'], k = 0;
+      im.onerror = function(){ k++; if (k < names.length) { im.src = names[k]; } else { f.remove(); } };
+      im.src = names[0];
+      f.appendChild(im);
+      if (CAPTIONS[i-1]) { var c = document.createElement('figcaption'); c.textContent = CAPTIONS[i-1]; f.appendChild(c); }
+      grid.appendChild(f);
+    })(i);
+  }
+})();
+</script>
+</body>
+</html>
