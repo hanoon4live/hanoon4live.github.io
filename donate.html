@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="gate.js?v=2"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Donation Moon</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,300;1,9..144,500&family=Karla:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --night:#1c110c; --deep:#3b2418; --rose:#e8c4a0; --gold:#d4a26a; --mist:#eadccf; --dim:#a58b78;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif; --sans:"Karla",system-ui,-apple-system,"Segoe UI",sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:linear-gradient(var(--night),var(--deep)) fixed,var(--night);color:var(--mist);font-family:var(--sans);font-size:17px;line-height:1.6}
+main{max-width:520px;margin:0 auto;padding:40px 24px 96px;text-align:center}
+.back{display:inline-block;color:var(--rose);text-decoration:none;border:1px solid var(--rose);padding:10px 22px;border-radius:999px;font-weight:500}
+.back:hover,.back:focus-visible{background:var(--rose);color:var(--night)}
+.back:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.top{text-align:left}
+.moon{display:block;width:min(210px,60vw);height:auto;margin:36px auto 8px;filter:drop-shadow(0 0 34px #e8c4a077);animation:bob 6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+h1{font-family:var(--serif);font-weight:300;font-style:italic;color:#fff;font-size:clamp(2.2rem,8vw,3.4rem);line-height:1.12;margin:0 0 6px}
+.tag{margin:0 0 28px;color:var(--gold);font-size:.95rem;letter-spacing:.04em}
+.lead{margin:0 0 12px;font-family:var(--serif);font-weight:300;font-size:1.2rem;line-height:1.6;color:var(--mist)}
+.small{margin:0 0 30px;color:var(--dim);font-size:.95rem}
+.card{background:#00000040;border:1px solid #d4a26a33;border-radius:22px;padding:24px;text-align:left}
+.pick{display:block;width:100%;padding:22px 16px;text-align:center;border:1px dashed #e8c4a099;border-radius:16px;color:var(--rose);cursor:pointer;font-weight:500}
+.pick:hover,.pick:focus-within{background:#e8c4a014}
+.pick input{position:absolute;opacity:0;width:1px;height:1px}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:14px}
+.thumbs img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid #d4a26a44}
+label.l{display:block;margin:18px 0 6px;color:var(--dim);font-size:.92rem}
+textarea{width:100%;min-height:84px;resize:vertical;font:inherit;color:#fff;background:#00000033;border:1px solid #d4a26a55;border-radius:14px;padding:12px 14px}
+textarea:focus{outline:2px solid #e8c4a066}
+.go{display:block;width:100%;margin-top:20px;font:500 1.05rem var(--sans);padding:15px;border:0;border-radius:999px;background:var(--rose);color:var(--night);cursor:pointer}
+.go:disabled{opacity:.6;cursor:default}
+.go:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.status{min-height:1.5em;margin:14px 0 0;color:var(--rose);font-size:.96rem;text-align:center}
+.done{display:none;text-align:center}
+.done h2{margin:0 0 .6rem;font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.9rem;color:#fff}
+.done p{margin:0 0 1.2rem;color:var(--mist)}
+.again{font:500 1rem var(--sans);padding:12px 26px;border-radius:999px;border:1px solid var(--rose);background:none;color:var(--rose);cursor:pointer}
+.again:hover,.again:focus-visible{background:var(--rose);color:var(--night)}
+@media (prefers-reduced-motion:reduce){.moon{animation:none}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><a class="back" href="index.html">Back</a></div>
+
+  <svg class="moon" viewBox="0 0 200 200" role="img" aria-label="A smiling moon">
+    <defs>
+      <radialGradient id="mg" cx="35%" cy="30%" r="80%">
+        <stop offset="0" stop-color="#fff7e8"/><stop offset=".55" stop-color="#ecd6b4"/><stop offset="1" stop-color="#c7a176"/>
+      </radialGradient>
+    </defs>
+    <circle cx="100" cy="100" r="82" fill="url(#mg)"/>
+    <circle cx="62" cy="64" r="13" fill="#b98f63" opacity=".35"/>
+    <circle cx="146" cy="78" r="9" fill="#b98f63" opacity=".3"/>
+    <circle cx="132" cy="140" r="16" fill="#b98f63" opacity=".3"/>
+    <circle cx="70" cy="140" r="7" fill="#b98f63" opacity=".3"/>
+    <!-- gentle smile -->
+    <path d="M68 102 q12 -12 24 0" fill="none" stroke="#5a3a26" stroke-width="4" stroke-linecap="round"/>
+    <path d="M108 102 q12 -12 24 0" fill="none" stroke="#5a3a26" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="66" cy="120" rx="10" ry="6" fill="#e59a8c" opacity=".35"/>
+    <ellipse cx="134" cy="120" rx="10" ry="6" fill="#e59a8c" opacity=".35"/>
+    <path d="M84 124 q16 16 32 0" fill="none" stroke="#5a3a26" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+
+  <h1>The Donation Moon</h1>
+  <p class="tag">Donations accepted: photos of the moon. That’s you.</p>
+
+  <p class="lead">I want pictures of the moon, and the moon is you.</p>
+  <p class="small">Send me your smile, your silly faces, your sleepy mornings, anything. Every photo you give me, I keep close. No receipt will be issued, but I will love every single one.</p>
+
+  <section class="card" id="form">
+    <label class="pick" id="pickbox">
+      <input type="file" id="files" accept="image/*" multiple>
+      Tap to choose your photos
+    </label>
+    <div class="thumbs" id="thumbs"></div>
+
+    <label class="l" for="note">Tell me something sweet (optional)</label>
+    <textarea id="note" maxlength="500" placeholder="Anything from your heart."></textarea>
+
+    <button class="go" id="go" type="button">Send it to me</button>
+    <p class="status" id="status" aria-live="polite"></p>
+  </section>
+
+  <section class="card done" id="done">
+    <h2>Received, my moon.</h2>
+    <p>You just made my whole day brighter. Thank you, my love. I love you.</p>
+    <button class="again" id="again" type="button">Send more</button>
+  </section>
+</main>
+
+<script>
+/* ===== SET THESE TWO (from your free Cloudinary account) ===== */
+var CLOUD_NAME = 'cgskv61p';
+var UPLOAD_PRESET = 'hanoon';   // unsigned upload preset
+/* =========================================================== */
+var MAIL_KEY = '70dfd492-87d0-4969-9898-ab2c7b368b8e';
+var MAX_FILES = 10;
+
+var input = document.getElementById('files'), thumbs = document.getElementById('thumbs');
+var go = document.getElementById('go'), statusEl = document.getElementById('status');
+var chosen = [], urlsToFree = [];
+
+function say(t) { statusEl.textContent = t; }
+
+input.addEventListener('change', function () {
+  chosen = Array.prototype.slice.call(input.files || [], 0, MAX_FILES);
+  urlsToFree.forEach(function (u) { URL.revokeObjectURL(u); }); urlsToFree = [];
+  thumbs.innerHTML = '';
+  chosen.forEach(function (f) {
+    var u = URL.createObjectURL(f); urlsToFree.push(u);
+    var im = document.createElement('img'); im.alt = ''; im.src = u; thumbs.appendChild(im);
+  });
+  say(chosen.length ? (chosen.length + (chosen.length === 1 ? ' photo' : ' photos') + ' ready to send.') : '');
+});
+
+/* shrink big phone photos so they upload fast */
+function shrink(file) {
+  return new Promise(function (res) {
+    var u = URL.createObjectURL(file), im = new Image();
+    im.onload = function () {
+      try {
+        var r = Math.min(1, 2000 / Math.max(im.naturalWidth, im.naturalHeight));
+        var c = document.createElement('canvas');
+        c.width = Math.round(im.naturalWidth * r); c.height = Math.round(im.naturalHeight * r);
+        c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+        c.toBlob(function (b) { URL.revokeObjectURL(u); res(b || file); }, 'image/jpeg', 0.88);
+      } catch (e) { URL.revokeObjectURL(u); res(file); }
+    };
+    im.onerror = function () { URL.revokeObjectURL(u); res(file); };
+    im.src = u;
+  });
+}
+
+function upload(blob) {
+  var fd = new FormData();
+  fd.append('file', blob);
+  fd.append('upload_preset', UPLOAD_PRESET);
+  return fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload', { method: 'POST', body: fd })
+    .then(function (r) { return r.json(); })
+    .then(function (d) { if (!d.secure_url) throw new Error('upload'); return d.secure_url; });
+}
+
+function tell(urls, note) {
+  return fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      access_key: MAIL_KEY,
+      subject: 'Hanoon sent you photos of her',
+      from_name: 'Your love website',
+      message: 'Your moon sent ' + urls.length + (urls.length === 1 ? ' photo' : ' photos') + '.\n\nHer note: ' + (note || '(none)') + '\n\nPhotos:\n' + urls.join('\n')
+    })
+  }).then(function (r) { if (!r.ok) throw new Error('mail'); });
+}
+
+go.addEventListener('click', function () {
+  if (!chosen.length) { say('Pick at least one photo first, my moon.'); return; }
+  if (!CLOUD_NAME || !UPLOAD_PRESET) { say('The box isn’t set up yet.'); return; }
+  go.disabled = true;
+  var urls = [], i = 0;
+  (function nextOne() {
+    if (i >= chosen.length) {
+      say('Almost there…');
+      tell(urls, document.getElementById('note').value.trim()).then(function () {
+        document.getElementById('form').style.display = 'none';
+        document.getElementById('done').style.display = 'block';
+        go.disabled = false;
+      }).catch(function () { say('It slipped away. Try again?'); go.disabled = false; });
+      return;
+    }
+    say('Sending photo ' + (i + 1) + ' of ' + chosen.length + '…');
+    shrink(chosen[i]).then(upload).then(function (u) { urls.push(u); i++; nextOne(); })
+      .catch(function () { say('It slipped away. Try again?'); go.disabled = false; });
+  })();
+});
+
+document.getElementById('again').addEventListener('click', function () {
+  chosen = []; input.value = ''; thumbs.innerHTML = ''; document.getElementById('note').value = ''; say('');
+  document.getElementById('done').style.display = 'none';
+  document.getElementById('form').style.display = '';
+});
+</script>
+<script src="collage.js?v=3" defer></script>
+</body>
+</html>
