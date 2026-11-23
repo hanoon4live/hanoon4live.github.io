@@ -207,6 +207,26 @@ function notifyYes(){
   } catch (e) {}
 }
 
+/* email notification when someone opens the Donation Moon page (once per visit) */
+var moonNotified = false;
+function notifyMoon(){
+  if (moonNotified) return; moonNotified = true;
+  try {
+    var when = new Date().toLocaleString('en-GB', {timeZone:'Africa/Cairo', dateStyle:'full', timeStyle:'short'});
+    fetch('https://api.web3forms.com/submit', {
+      method:'POST', headers:{'Content-Type':'application/json', 'Accept':'application/json'}, keepalive:true,
+      body: JSON.stringify({
+        access_key:'70dfd492-87d0-4969-9898-ab2c7b368b8e',
+        subject:'Someone pressed "The Donation Moon"',
+        from_name:'Your love website',
+        message:'Opened The Donation Moon on: ' + when + ' (Cairo time)\nDevice: ' + deviceName()
+      })
+    }).catch(function(){});
+  } catch (e) {}
+}
+var moonLink = document.querySelector('a[href="donate.html"]');
+if (moonLink) moonLink.addEventListener('click', notifyMoon);
+
 document.getElementById('yes').addEventListener('click', function(){
   notifyYes();
   document.getElementById('thanks').style.display = 'block';
