@@ -1,8 +1,6 @@
-/* Big "I love you" intro. Shows once each time she opens the site (after the password),
+/* Big "I love you" intro. Shows every time the page loads or refreshes (after the password),
    then fades into the page. Tap anywhere to skip. */
 (function () {
-  try { if (sessionStorage.getItem('hn_intro')) return; } catch (e) {}
-
   var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var st = document.createElement('style');
@@ -69,7 +67,6 @@
 
   function close() {
     if (closed) return; closed = true;
-    try { sessionStorage.setItem('hn_intro', '1'); } catch (e) {}
     timers.forEach(clearTimeout); if (hearts) clearInterval(hearts);
     box.classList.add('out');
     setTimeout(function () { box.remove(); st.remove(); }, 1000);
