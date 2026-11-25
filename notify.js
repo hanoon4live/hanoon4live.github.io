@@ -43,12 +43,24 @@
     } catch (e) {}
   }
 
+  var onUs = /(^|\/)us(\.html)?$/.test(location.pathname);
+
   document.addEventListener('click', function (e) {
-    var el = e.target.closest && e.target.closest('button, a[href], [role="button"], label.pick, .star');
+    var t = e.target;
+    if (!t.closest) return;
+
+    /* photos: only the photos on the Us page send an email */
+    if (t.tagName === 'IMG' && !t.closest('button, a, .lb, #lb')) {
+      if (onUs) send('Us photo: ' + ((t.currentSrc || t.src || '').split('/').pop().split('?')[0] || 'photo'));
+      return;
+    }
+
+    var el = t.closest('button, a[href], [role="button"], label.pick, .star');
     if (!el) return;
-    /* these already send their own email */
-    if (el.id === 'yes' || el.id === 'go') return;
-    if (el.matches && el.matches('a[href="donate.html"]') && /index\.html$|\/$|^$/.test(location.pathname.split('/').pop())) return;
+    if (el.classList.contains('star')) return;      /* no email for stars */
+    if (el.classList.contains('fph')) return;       /* no email for food photos */
+    if (el.id === 'yes' || el.id === 'go') return;  /* these already send their own email */
+    if (el.matches('a[href="donate.html"]') && /(^|\/)(index\.html)?$/.test(location.pathname)) return;
     send(label(el));
   }, true);
 })();
