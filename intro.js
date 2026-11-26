@@ -94,6 +94,6 @@
 
   // wait until the password screen is gone (if there is one), then play
   (function wait() {
-    if (document.getElementById('gate')) { setTimeout(wait, 120); } else { start(); }
+    if (document.getElementById('gate') || document.getElementById('msgbox')) { setTimeout(wait, 120); } else { start(); }
   })();
 })();
