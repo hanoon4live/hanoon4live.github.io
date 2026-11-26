@@ -4,14 +4,14 @@
   /* ===== اكتب كلامك هنا ===== */
   var TITLE = "ليكي يا هنون";
   var LINES = [
-    "هنا هتكتب أول سطر.",
-    "وهنا السطر التاني.",
-    "وهنا السطر التالت، وزوّد أو امسح براحتك."
+    "بص يا حنونت قلبي انا عارف انك مضايقة من الدرجة وعارفة انك متوترة من الامتحان اللي جاي بس انا عارف يا حنون انك شاطرة وقد اي حاجة",
+    "متنسيش ابدا ان بحبك وهفضل جنبك وهفضل معاكي يا حنونتي وعمري مهسيبلك ",
+    "I love u from the bottom of my heart u will alwys be my sunshine my truly and only love I got my beauty thank u for alys be there my love"
   ];
   var BUTTON = "كمّلي للموقع";
   /* ========================= */
 
-  /* shows only once: after she presses the last button it never appears again on that device.
+  /* shows only once: after she presses the last butبton it never appears again on that device.
      To test it yourself, open the site with ?box at the end of the link (index.html?box). */
   var KEY = 'hn_box_seen';
   var force = /[?&]box(=|&|$)/.test(location.search);
