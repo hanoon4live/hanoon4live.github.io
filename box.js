@@ -6,7 +6,7 @@
   var LINES = [
     "بص يا حنونت قلبي انا عارف انك مضايقة من الدرجة وعارفة انك متوترة من الامتحان اللي جاي بس انا عارف يا حنون انك شاطرة وقد اي حاجة",
     "متنسيش ابدا ان بحبك وهفضل جنبك وهفضل معاكي يا حنونتي وعمري مهسيبلك ",
-    "I love u from the bottom of my heart u will alwys be my sunshine my truly and only love I got my beauty thank u for alys be there my love"
+    "I love u from the bottom of my heart u will alwys be my sunshine my truly and only love I got my beauty thank u for always be there my love"
   ];
   var BUTTON = "  كملي للموقع يا قلبي"; 
   /* ========================= */
