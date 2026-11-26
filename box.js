@@ -2,13 +2,13 @@
    and press the button before she can enter the site. */
 (function () {
   /* ===== اكتب كلامك هنا ===== */
-  var TITLE = "ليكي يا هنون";
+  var TITLE = "ليكي يا حنون";
   var LINES = [
     "بص يا حنونت قلبي انا عارف انك مضايقة من الدرجة وعارفة انك متوترة من الامتحان اللي جاي بس انا عارف يا حنون انك شاطرة وقد اي حاجة",
     "متنسيش ابدا ان بحبك وهفضل جنبك وهفضل معاكي يا حنونتي وعمري مهسيبلك ",
     "I love u from the bottom of my heart u will alwys be my sunshine my truly and only love I got my beauty thank u for alys be there my love"
   ];
-  var BUTTON = "كمّلي للموقع";
+  var BUTTON = "  كملي للموقع يا قلبي"; 
   /* ========================= */
 
   /* shows only once: after she presses the last butبton it never appears again on that device.
