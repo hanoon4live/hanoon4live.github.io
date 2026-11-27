@@ -2,7 +2,7 @@
    (each one shows a line from you), the sky turns to sunshine, then she can enter the site. */
 (function () {
   /* ===== اكتب كلامك هنا ===== */
-  var TITLE  = "ليكي يا هنون";
+  var TITLE  = "ليكي يا حنون";
   var HINT   = "فيه غيوم مخنوقة، دوسي عليها وفرقعيها";
   var LINES  = [                      /* كل سطر = غيمة. من 3 لـ 8 أسطر */
     "يعني يا حنون مش هتضحكي كده تفضلي زعلانة منا بحبك يا حنون ومش عايزك تبقي كده.",
