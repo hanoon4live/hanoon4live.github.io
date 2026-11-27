@@ -17,7 +17,7 @@
   /* ========================= */
 
   /* shows only once per device. To test: open the site with ?box at the end of the link */
-  var KEY = 'hn_box_seen';
+  var KEY = 'hn_box_seen2';
   var force = /[?&]box(=|&|$)/.test(location.search);
   try { if (!force && localStorage.getItem(KEY)) return; } catch (e) {}
 
